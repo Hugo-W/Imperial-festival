@@ -5,7 +5,7 @@ import plotly.tools as tls
 from plotly.graph_objs import Stream, Scatter, Data, Layout, Figure
 
 #Math/stats libraries:
-#import numpy as np
+import numpy as np
 
 
 class MyLoop():
@@ -22,10 +22,9 @@ class MyLoop():
             self.root.update() # always process new events
 
             if self.running:
-                # do stuff
-                self.someVar += 1
-                #print(self.someVar)
                 x = time.clock()-self.t0
+                # do stuff
+                self.someVar = np.cos(x*2*np.pi)
                 y = self.someVar
                 stream.write(dict(x = x, y = y))
                 time.sleep(0.08)  # (!) plot a point every 80 ms, for smoother plotting
