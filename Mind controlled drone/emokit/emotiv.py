@@ -390,7 +390,7 @@ class Emotiv(object):
             'Unknown': {'value': 0, 'quality': 0}
         }
         self.serial_number = serial_number  # You will need to set this manually for OS X.
-        self.old_model = True
+        self.old_model = False
 
     def setup(self):
         """
