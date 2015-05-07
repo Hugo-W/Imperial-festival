@@ -7,6 +7,7 @@ if platform.system() == "Windows":
     import socket  # Needed to prevent gevent crashing on Windows. (surfly / gevent issue #459)
 import gevent
 import sys
+import msvcrt
 
 if __name__ == "__main__":
     headset = Emotiv()
@@ -14,14 +15,19 @@ if __name__ == "__main__":
     gevent.sleep(0)
     try:
         while True:
+            if msvcrt.kbhit() and msvcrt.getch==chr(27):
+                break
             packet = headset.dequeue()
             print packet.gyro_x, packet.gyro_y, packet.battery
             gevent.sleep(0)
-    except KeyboardInterrupt:
+    except Exception,ex:
         headset.running = False
         headset.close()
-        gevent.kill(routine, KeyboardInterrupt)
+        gevent.kill(routine)
+        print ex
     finally:
+        headset.running = False
         headset.close()
         gevent.kill(routine)
+        print "msg"
     sys.exit()
