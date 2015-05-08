@@ -1,6 +1,8 @@
 x = O1;
+%x = VarName7;
+x = x-mean(x);
 
-NFFT = 2048;
+NFFT = length(O1);
 Fs = 128;
 freq = Fs/2*linspace(0,1,NFFT/2+1);
 power_2 = 2*abs(fft(x)).^2/(NFFT^2);

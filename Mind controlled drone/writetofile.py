@@ -12,7 +12,7 @@ import csv
 import numpy as np
 from scipy.signal import butter, lfilter
 
-csv_writer = csv.writer(open("rawdataHugo_closed.csv","wb"), delimiter=',')
+csv_writer = csv.writer(open("rawdataTest.csv","wb"), delimiter=',')
 
 sensornames = ['F3','FC5','AF3','F7','T7','P7','O1','O2','P8','T8','F8','AF4','FC6','F4']
 csv_writer.writerow(sensornames)
@@ -48,8 +48,9 @@ if __name__ == "__main__":
     headset = Emotiv()
     routine = gevent.spawn(headset.setup)
     gevent.sleep(0)
+    N = 1024
     try:
-        for i in range(2048):
+        for i in range(N):
             buffin = []
             #for i in xrange(128):
             packet = headset.dequeue()                
@@ -63,7 +64,7 @@ if __name__ == "__main__":
                 #buffin.append(packet.sensors['F3']['value'])
                 #print packet.gyro_x, packet.gyro_y, packet.battery
             gevent.sleep(0)
-            if i==2047: 
+            if i==N-1: 
                 print "Finished! Kill me..."
                 break
             #alpha = getAlphaPower(buffin)
